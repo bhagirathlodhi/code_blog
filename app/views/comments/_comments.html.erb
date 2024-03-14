@@ -1,0 +1,10 @@
+<% comments.each do |comment| %>
+  <div class="comment">
+    <p>
+      <strong>Comment:</strong>
+      <%= comment.body %>
+    </p>
+    <%= render_comments(comment.replies) %>
+    <%= render 'comments/form', post: comment.post, parent_comment: comment %>
+  </div>
+<% end %>

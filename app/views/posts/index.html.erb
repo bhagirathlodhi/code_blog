@@ -1,0 +1,58 @@
+<div class="container mt-5">
+  <div class="row">
+    <% @posts.each do |post| %>
+      <div class="col-md-8 mb-4">
+        <div class="card">
+          <div class="row no-gutters">
+            <div class="col-md-6">
+            <% if post.pimg.attached? %>
+              <center><%= image_tag post.pimg, class: "card-img" %></center>
+            <% end %>
+            </div>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h5 class="card-title"><%= post.title %></h5>
+                <p class="card-text"><%= post.des %></p>
+              </div>
+            </div>
+          </div>
+          <h2>Add a comment:</h2>
+          <%= form_with model: [ post, post.comments.build ] do |form| %>
+            <p>
+              <%= form.text_area :body %>
+            </p>
+            <p>
+              <%= form.submit %>
+            </p>
+          <% end %>
+          <h2>Comments</h2>
+          <% post.comments.each do |comment| %>
+            <div>
+           <strong>comments:</strong>
+              <p style="margin-left: 1rem;">
+                <%= comment.body %>
+              </p>
+             
+              <% if comment.persisted? %> 
+                <%= form_with model: [ post, comment, comment.replies.build ], url: post_comment_replies_path(post, comment) do |form| %>
+                  <p>
+                    <%= form.text_area :body %>
+                  </p>
+                  <p>
+                    <%= form.submit "Reply" %>
+                  </p>
+                <% end %>
+                <% comment.replies.each do | rep | %>
+                  <p style="margin-left: 1rem;">
+                  <%= rep.body %>
+                </p>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+             
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
