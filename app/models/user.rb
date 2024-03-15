@@ -3,7 +3,8 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :replies, dependent: :destroy
-
+  # belongs_to :parent, class_name: "Comment", optional: true
+  # has_many :replies, class_name: "Comment", foreign_key: "parent_id", dependent: :destroy
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

@@ -1,0 +1,12 @@
+<% comments.each do |comment| %>
+  <div>
+    <p style="margin-left: 1rem;">
+      <%= comment.body %> 
+      <% if comment.parent_comment_id.nil? && comment.id.present? %>
+        <a href="#" class="comment-form-display">reply</a> 
+        <%= render partial: 'comments/form', locals: { post: comment.post, parent_comment: comment } %>
+      <% else %>
+      <% end %>
+    </p>
+  </div>
+<% end %>

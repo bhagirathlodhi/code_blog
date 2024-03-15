@@ -5,9 +5,9 @@
         <div class="card">
           <div class="row no-gutters">
             <div class="col-md-6 mt-2">
-            <% if post.pimg.attached? %>
-              <center><%= image_tag post.pimg, class: "card-img" %></center>
-            <% end %>
+              <% if post.pimg.attached? %>
+                <center><%= image_tag post.pimg, class: "card-img" %></center>
+              <% end %>
             </div>
             <div class="col-md-6">
               <div class="card-body">
@@ -16,25 +16,14 @@
               </div>
             </div>
           </div>
-          <h2>Add a comment:</h2>
-          <%= render 'comments/form', post: post %>
-          <h2>Comments</h2>
-          <% post.comments.each do |comment| %>
-            <div>
-              <p style="margin-left: 1rem;">
-                <%= comment.body %>
-              </p>
-              
-              <% if comment.persisted? %>
-              <%= render partial: 'replies/reply_form', locals: { post: post, comment: comment } %>
-                <% comment.replies.each do | rep | %>
-                  <p style="margin-left: 1rem;">
-                  <%= rep.body %>
-                </p>
-                <% end %>
-              <% end %>
-            </div>
-          <% end %>
+          <div class="card-body">
+            <h2>Add a comment:</h2>
+            <%= render 'comments/form', post: post %>
+          </div>
+          <div class="card-body">
+            <h2>Comments</h2>
+            <%= render partial: 'comments/comment', locals: { comments: post.comments, post: post  } %>
+          </div>
         </div>
       </div>
     <% end %>
