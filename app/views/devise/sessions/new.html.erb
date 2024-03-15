@@ -6,8 +6,8 @@
         <h2 class="p-2 text-center mb-4 h4" id="formHeading">Login</h2>
           <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
             <div class="field mb-4">
-              <%= f.label :email %>
-              <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control" %>
+              <%= f.label :username_or_email %>
+              <%= f.text_field :login, class:"form-control" %>
             </div>
 
             <div class="field">

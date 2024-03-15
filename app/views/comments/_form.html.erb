@@ -1,10 +1,11 @@
 
-<%= form_with model: [ post, post.comments.build(parent_comment: parent_comment) ] do |form| %>
-  <p>
-    <%= form.label :body %><br>
+<%= form_with model: [ post, post.comments.build ] do |form| %>
+  
+  <p style="margin-left: 1rem;">
     <%= form.text_area :body %>
   </p>
-  <p>
-    <%= form.submit %>
+  <p style="margin-left: 1rem;">
+    <%= form.submit "comment", class:"btn btn-outline-success" %>
   </p>
 <% end %>
+

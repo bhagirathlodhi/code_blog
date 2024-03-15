@@ -1,0 +1,10 @@
+<% if comment.persisted? %>
+  <%= form_with model: [post, comment, comment.replies.build], url: post_comment_replies_path(post, comment) do |form| %>
+    <p style="margin-left: 1rem;">
+      <%= form.text_area :body %>
+    </p>
+    <p style="margin-left: 1rem;">
+      <%= form.submit "Reply", class: "btn btn-outline-success" %>
+    </p>
+  <% end %>
+<% end %>

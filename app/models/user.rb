@@ -7,8 +7,21 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         authentication_keys: [:login]
 
- 
-        
+ attr_accessor :login
+
+ def login 
+  @login || self.full_name || self.email
+ end
+  
+ def self.find_for_authentication(warden_condition)
+  condition = warden_condition.dup
+  if(login = condition.delete(:login))
+    where(condition.to_h).where(["lower(full_name) = :value OR lower(email) = :value", { value: login.downcase }]).first
+  elsif condition.has_key?(:username) || condition.has_key?(:email)
+    where(condition.to_h).first
+  end
+ end
 end

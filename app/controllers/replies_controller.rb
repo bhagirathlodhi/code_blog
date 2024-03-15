@@ -1,5 +1,6 @@
 class RepliesController < ApplicationController
-    def create
+  def create
+    
     @comment = Comment.find(params[:comment_id])
     @reply = @comment.replies.create(reply_params.merge(user: current_user))
     redirect_to root_path

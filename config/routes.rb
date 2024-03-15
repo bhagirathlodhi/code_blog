@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  # devise_for :users
-  devise_for :users #, controllers: { sessions: 'sessions' }, skip: [:registrations, :passwords, :confirmations, :unlocks]
+  devise_for :users
+  # devise_for :users, controllers: { sessions: 'sessions' }, only: [:create]
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -10,7 +11,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   get 'user_posts', to: 'posts#show_user_posts', as: 'user_posts'
-
 
    root "posts#index"
    resources :posts do

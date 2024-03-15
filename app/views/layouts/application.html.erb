@@ -13,7 +13,14 @@
   </head>
 
   <body>
-  <%= render 'shared/navbar' %>
+    <%= render 'shared/navbar' %>
+    <div class="container mt-2">
+      <% if flash[:alert] %>
+          <div id="flash" class="alert"><%= flash[:alert] %></div>
+      <% elsif flash[:notice] %>
+          <div id="flash" class="notice"><%= flash[:notice] %></div>
+      <% end %>
+    </div>
     <%= yield %>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
