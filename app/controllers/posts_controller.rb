@@ -21,6 +21,7 @@ class PostsController < ApplicationController
   def show_user_posts
     @posts = current_user.posts
   end
+  
   private
 
   # def set_post
