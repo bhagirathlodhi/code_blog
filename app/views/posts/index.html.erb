@@ -16,19 +16,11 @@
             <div class="col-md-6">
               <div class="card-body">
                 <h5 class="card-title"><%= post.title %></h5>
-                <p class="card-text"><%= post.des %></p>
+                <p class="card-text"><%= truncate(post.des, length: 80) %></p>
               </div>
             </div>
           </div>
-          <div class="card-body">
-          
-            <h2>Add a comment:</h2>
-              <%= render partial: 'comments/form', locals: {post: post, parent_comment: nil } %>
-          </div>
-          <div class="card-body">
-            <h2>Comments</h2>
-            <%= render partial: 'comments/comment', locals: { comments: post.comments, post: post  } %>
-          </div>
+          <%= link_to "show", post_path(post),class: "btn btn-info mt-2"  %>
         </div>
       </div>
     <% end %>

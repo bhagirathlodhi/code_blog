@@ -1,0 +1,41 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+      <div class="col-md-8 mb-4">
+        <div class="card">
+          <div class="row no-gutters">
+            <div class="col-md-6 mt-2">
+              <% if @post.pimg.attached? %>
+                <center>
+                <div>
+                  <%= image_tag @post.pimg, class: "card-img", style: "margin-left: 10px;" %>
+                </div>
+                </center>
+              <% end %>
+            </div>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h5 class="card-title"><%= @post.title %></h5>
+                <p class="card-text"><%= @post.des %></p>
+              </div>
+            </div>
+          </div>
+          <%= link_to "edit", edit_post_path(@post),class: "btn btn-info mt-2"  %>
+          <% if user_post(@post) %>
+            <%= link_to "Destroy", post_path(@post), data: {
+            turbo_method: :delete,
+            turbo_confirm: "Are you sure?"
+            },class: "btn btn-warning mt-2"%>
+            <div class="card-body">
+          <% end %>
+          
+            <h2>Add a comment:</h2>
+              <%= render partial: 'comments/form', locals: {post: @post, parent_comment: nil } %>
+          </div>
+          <div class="card-body">
+            <h2>Comments</h2>
+            <%= render partial: 'comments/comment', locals: { comments: @post.comments, post: @post  } %>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

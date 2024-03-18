@@ -1,5 +1,5 @@
 module CommentsHelper
-  # def render_comments(comments)
-  #   render partial: 'comments/comments', locals: { comments: comments }
-  # end
+  def user_comment(comment)
+    comment.user_id == current_user.id
+  end
 end

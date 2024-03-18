@@ -1,56 +1,32 @@
 <div class="container mt-5">
-  <div class="row">
+  <div class="row justify-content-center">
     <% @posts.each do |post| %>
       <div class="col-md-8 mb-4">
         <div class="card">
           <div class="row no-gutters">
-            <div class="col-md-6">
-            <% if post.pimg.attached? %>
-              <center><%= image_tag post.pimg, class: "card-img" %></center>
-            <% end %>
+            <div class="col-md-6 mt-2">
+              <% if post.pimg.attached? %>
+                <center>
+                <div>
+                  <%= image_tag post.pimg, class: "card-img", style: "margin-left: 10px;" %>
+                </div>
+                </center>
+              <% end %>
             </div>
             <div class="col-md-6">
               <div class="card-body">
                 <h5 class="card-title"><%= post.title %></h5>
-                <p class="card-text"><%= post.des %></p>
+                <p class="card-text"><%= truncate(post.des, length: 80) %></p>
               </div>
             </div>
           </div>
-          <h2>Add a comment:</h2>
-          <%= form_with model: [ post, post.comments.build ] do |form| %>
-            <p style="margin-left: 1rem;">
-              <%= form.text_area :body %>
-            </p>
-            <p style="margin-left: 1rem;">
-              <%= form.submit %>
-            </p>
-          <% end %>
-          <h2>Comments</h2>
-          <% post.comments.each do |comment| %>
-            <div>
-           <strong>comments:</strong>
-              <p style="margin-left: 1rem;">
-                <%= comment.body %>
-              </p>
-             
-              <% if comment.persisted? %> 
-                <%= form_with model: [ post, comment, comment.replies.build ], url: post_comment_replies_path(post, comment) do |form| %>
-                  <p style="margin-left: 1rem;">
-                    <%= form.text_area :body %>
-                  </p>
-                  <p style="margin-left: 1rem;">
-                    <%= form.submit "Reply" %>
-                  </p>
-                <% end %>
-                <% comment.replies.each do | rep | %>
-                  <p style="margin-left: 1rem;">
-                  <%= rep.body %>
-                </p>
-                <% end %>
-              <% end %>
-            </div>
-          <% end %>
-             
+          <%= link_to "show", post_path(post),class: "btn btn-info mt-2"  %>
+          <% if user_post(post) %>
+            <%= link_to "Destroy", post_path(post), data: {
+            turbo_method: :delete,
+            turbo_confirm: "Are you sure?"
+            },class: "btn btn-warning mt-2"%>
+            <% end %>
         </div>
       </div>
     <% end %>

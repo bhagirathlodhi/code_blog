@@ -15,11 +15,7 @@
   <body>
     <%= render 'shared/navbar' %>
     <div class="container mt-2">
-      <% if flash[:alert] %>
-          <div id="flash" class="alert"><%= flash[:alert] %></div>
-      <% elsif flash[:notice] %>
-          <div id="flash" class="notice"><%= flash[:notice] %></div>
-      <% end %>
+      <%= render "shared/flash" %>
     </div>
     <%= yield %>
 

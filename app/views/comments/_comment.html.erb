@@ -1,10 +1,19 @@
 <% comments.each do |comment| %>
   <div>
-    <p style="margin-left: <%= comment.replies.any? %> '3rem' : '2rem' %>;">
+    <p style="margin-left: <%= comment.parent_comment_id.nil? ? '2rem' : '3rem' %>;">
       <%= comment.body %>
       <% if comment.parent_comment_id.present? || comment.id.present? %>
-        <a href="#" class="comment-form-display">reply</a> 
-        <%= render partial: 'comments/form', locals: { post: comment.post, parent_comment: comment } %>
+        <% if user_comment(comment) %> 
+          <%= link_to "Delete", post_comment_path(comment.post_id, comment.id), data: {
+            turbo_method: :delete,
+            turbo_confirm: "Are you sure?"
+            }, class: "btn btn-warning mt-2" %>
+        <% end %>
+        <%= form_with(model: [comment.post, Comment.new], local: true, id: "reply-form-#{comment.id}", class: "reply-form hidden") do |form| %>
+          <%= form.hidden_field :parent_comment_id, value: comment.id %>
+          <%= form.text_area :body, placeholder: "Write a reply..." %>
+          <%= form.submit "Reply", class: "btn btn-primary" %>
+        <% end %>
       <% end %>
     </p>
   </div>
