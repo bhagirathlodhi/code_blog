@@ -1,12 +1,16 @@
 <% comments.each do |comment| %>
   <div>
-    <p style="margin-left: 1rem;">
-      <%= comment.body %> 
-      <% if comment.parent_comment_id.nil? && comment.id.present? %>
+    <p style="margin-left: <%= comment.parent_comment_id.nil? ? '2rem' : '3rem' %>;">
+      <%= comment.body %>
+      <% if comment.parent_comment_id.present? || comment.id.present? %>
         <a href="#" class="comment-form-display">reply</a> 
         <%= render partial: 'comments/form', locals: { post: comment.post, parent_comment: comment } %>
-      <% else %>
       <% end %>
     </p>
+    <% if comment.replies.any? %>
+    <div style="margin-left: 3rem;"> <!-- Adjust margin as needed -->
+      <%= render partial: 'comments/comment', locals: { comments: comment.replies } %>
+    </div>
+  <% end %>
   </div>
 <% end %>
