@@ -19,9 +19,10 @@
               </div>
             </div>
           </div>
-          <%= link_to "edit", edit_post_path(@post),class: "btn btn-info mt-2"  %>
           <% if user_post(@post) %>
-            <%= link_to "Destroy", post_path(@post), data: {
+            <%= link_to "edit", edit_post_path(@post),class: "btn btn-info mt-2"  %>
+
+            <%= link_to  "<i class='bi bi-trash3'></i>".html_safe, post_path(@post), data: {
             turbo_method: :delete,
             turbo_confirm: "Are you sure?"
             },class: "btn btn-warning mt-2"%>
