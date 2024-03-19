@@ -34,7 +34,9 @@
           </div>
           <div class="card-body">
             <h2>Comments</h2>
-            <%= render partial: 'comments/comment', locals: { comments: @post.comments, post: @post  } %>
+            <div id="comments">
+              <%= render partial: 'comments/comment', locals: { comments: @post.comments, post: @post } %>
+            </div>
           </div>
         </div>
       </div>

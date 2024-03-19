@@ -1,9 +1,13 @@
 class CommentsController < ApplicationController
   before_action :find_comment, only: %i[edit update destroy]
+  before_action :find_post, only: %i[create destroy]
   def create
-    @post = Post.find(params[:post_id])
     @comment = @post.comments.create(comment_params.merge(user: current_user))
-    redirect_to @post, notice: 'you commented'
+    
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.append(:comments, partial: "comments/comment", locals: { comment: @comment }) }
+      format.html { redirect_to @post }
+    end
   end
 
   def edit 
@@ -17,9 +21,11 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:post_id])
     @comment.destroy
-    redirect_to @post, notice: "comment deleted"
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@comment) }
+      format.html { redirect_to @post }
+    end
   end
 
   
@@ -28,13 +34,11 @@ class CommentsController < ApplicationController
     def find_comment
       @comment = Comment.find(params[:id])
     end
+    def find_post
+      @post = Post.find(params[:post_id])
+    end
 
     def comment_params
       params.require(:comment).permit(:body, :parent_comment_id)
     end
 end
-  # def new
-  #   @post = Post.find(params[:post_id])
-  #   @parent_comment = Comment.find(params[:parent_comment_id])
-  #   @comment = @parent_comment.replies.build
-  # end
