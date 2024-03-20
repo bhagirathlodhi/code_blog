@@ -21,6 +21,10 @@ class PostsController < ApplicationController
   end
 
   def show
+    # respond_to do |format|
+    #   format.turbo_stream { render turbo_stream: turbo_stream.append(:comments, partial: "comments/comment", locals: { comment: @comment }) }
+    #   format.html { redirect_to @post }
+    # end
   end
 
   def show_user_posts
@@ -56,39 +60,3 @@ class PostsController < ApplicationController
 end
 
 
-# <div>
-#   <p><%= comment.body %></p>
-#   <%= link_to "Reply", new_post_comment_path(@post, parent_comment_id: comment.id) %>
-#   <% comment.replies.each do |reply| %>
-#     <%= render partial: 'comment', locals: { comment: reply } %>
-#   <% end %>
-# </div>
-
-
-# def new
-#   @post = Post.find(params[:post_id])
-#   @parent_comment = Comment.find(params[:parent_comment_id])
-#   @comment = @parent_comment.replies.build
-# end
-
-
-# class CommentsController < ApplicationController
-#   def create
-#     @post = Post.find(params[:post_id])
-#     @comment = @post.comments.build(comment_params)
-#     if @comment.save
-#       redirect_to @post, notice: 'Comment was successfully created.'
-#     else
-#       render 'posts/show'
-#     end
-#   end
-
-#   private
-
-#   def comment_params
-#     params.require(:comment).permit(:body, :parent_comment_id)
-#   end
-# end
-
-# <%= render partial: 'comments/reply', locals: { replies: comment.replies, comment: comment } %>
-#     <%= render partial: 'comments/comment', locals: { comments: comment.replies, post: post } if comment.replies.any? %>
